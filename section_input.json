@@ -1,0 +1,74 @@
+{
+    "1": {
+        "width": 250,
+        "depth": 250,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "column",
+        "no_rebar_b": 3,
+        "no_rebar_h": 3
+    },
+    "2": {
+        "width": 200,
+        "depth": 400,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "beam",
+        "no_rebar_b": null,
+        "no_rebar_h": null
+    },
+	"3": {
+        "width": 200,
+        "depth": 350,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "beam",
+        "no_rebar_b": null,
+        "no_rebar_h": null
+    },
+	"4": {
+        "width": 300,
+        "depth": 300,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "column",
+        "no_rebar_b": 3,
+        "no_rebar_h": 3
+    },
+	"5": {
+        "width": 200,
+        "depth": 300,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "beam",
+        "no_rebar_b": null,
+        "no_rebar_h": null
+    },
+	"6": {
+        "width": 350,
+        "depth": 350,
+        "fc": 21,
+        "fy": 415,
+        "fyt": 230,
+        "db": 16,
+        "ds": 10,
+        "member_type": "column",
+        "no_rebar_b": 3,
+        "no_rebar_h": 3
+    }
+}
