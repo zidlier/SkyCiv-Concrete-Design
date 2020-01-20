@@ -19,6 +19,7 @@ Step 1: From SkyCiv analysis results, select Output -> CSV Results and generate 
 	- Shear Force Z.csv (select All Load Combinations) -> rename to shear_z.csv
 	- Shear Force Y.csv (select All Load Combinations) -> rename to shear_y.csv
 	- Axial Force.csv (select All Load Combinations) -> rename to axial.csv
+	- Torsion Force.csv (select All Load Combinations) -> rename to torsion.csv
 
 	Copy all csv files to 'input' folder
 
@@ -48,6 +49,7 @@ OUTPUT:
 
 For Beam Design:
 On your terminal, you can obtain the result for beam design as table:
+
 
 ┌─────────┬───────────┬────────────┬────────────┬────┬──────────────┬──────────────┬─────────────┬─────────────┬──────────────┬──────────────┬────┬───────────────────────────────────────────┐
 │ (index) │ beam_mark │ beam_width │ beam_depth │ db │ support1_top │ support1_bot │ midspan_top │ midspan_bot │ support2_top │ support2_bot │ ds │                  spacing                  │
