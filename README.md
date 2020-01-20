@@ -1,8 +1,8 @@
 # SkyCiv-Concrete-Design
 My own concrete design based on SkyCiv S3D analysis output using nodejs
 
-SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
-written by Patrick Aylsworth C. Garcia, MSCE
+# SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
+# written by Patrick Aylsworth C. Garcia, MSCE
 
 
 
@@ -47,7 +47,7 @@ Step 4: To run, go to directory, open terminal and type "node design" - take not
 *****************************************************************************************************************************************
 OUTPUT:
 
-For Beam Design:
+# For Beam Design:
 On your terminal, you can obtain the result for beam design as table:
 
 
@@ -76,6 +76,9 @@ On your terminal, you can obtain the result for beam design as table:
 │   39    │   '42'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
 │   54    │   '57'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
 
+
+
+
 where: 	beam_mark - is the member id
 	db - longitudinal reinf. diameter
 	support1_top - number of rebar required on top of support section (A node)
@@ -91,7 +94,7 @@ Results are stored in beam_results.csv for post-processing of the table.
 
 
 
-For Column Forces:
+# For Column Forces:
 In order to easily plot the Pu-Mu forces on column interaction diagram for phiMn about z and phiMn about y, forces are sorted for eact section with Pu, My, and Mz.
 "member_id	Pu	My	Mz	section"
 "3	90.511	0.034	4.365	column1"
@@ -101,7 +104,7 @@ For post-processing, column_forces.csv is generated for plotting of forces in al
 
 
 
-For Column Design:
+# For Column Design:
 On your terminal, you can obtain the result for column interaction for phiMn about z and phiMn about y and as table:
 ┌─────────┬────────────────────┬────────────────────┬─────────────────────┬────────────────────┬────────────────────┬─────────────────────┐
 │ (index) │         c          │         Mn         │         Pn          │        phi         │       phiMn        │        phiPn        │
@@ -116,5 +119,7 @@ On your terminal, you can obtain the result for column interaction for phiMn abo
 │    7    │ 506.7323076923077  │ 37.35099664010097  │ 2080.1996816366036  │        0.65        │ 24.278147816065633 │ 1352.1297930637925  │
 │    8    │ 501.34153846153845 │ 37.08862945129603  │ 2080.1996816366036  │        0.65        │ 24.10760914334242  │ 1352.1297930637925  │
 │    9    │ 495.95076923076925 │ 36.820558627951854 │ 2080.1996816366036  │        0.65        │ 23.933363108168706 │ 1352.1297930637925  │
+
+
 
 Results are stored in column1.csv (column + member_id) for post-processing and generation of interaction diagram.
