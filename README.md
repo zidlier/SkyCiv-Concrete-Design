@@ -3,7 +3,7 @@ My own concrete design based on SkyCiv S3D analysis output using nodejs
 
 #### SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator using ACI 318-14
 ##### written by Patrick Aylsworth C. Garcia, MSCE
-
+https://www.linkedin.com/in/patrick-aylsworth-garcia/
 
 *****************************************************************************************************************************************
 ### SETUP:
