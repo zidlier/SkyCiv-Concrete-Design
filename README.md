@@ -1,7 +1,7 @@
 # SkyCiv-Concrete-Design
 My own concrete design based on SkyCiv S3D analysis output using nodejs
 
-#### SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
+#### SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator using ACI 318-14
 ##### written by Patrick Aylsworth C. Garcia, MSCE
 
 
@@ -53,10 +53,7 @@ Step 4: To run, go to directory, open terminal and type `node design` - take not
 
 ##### For Beam Design:
 On your terminal, you can obtain the result for beam design as table:
-
-
-│ (index) │ beam_mark │ beam_width │ beam_depth │ db │ support1_top │ support1_bot │ midspan_top │ midspan_bot │ support2_top │ support2_bot │ ds │ spacing │
-│    1    │    '4'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
+![image](https://user-images.githubusercontent.com/38188145/159314302-548b0ff1-0c0b-4263-bdf2-af7aa6a65cf5.png)
 
 
 where: 	beam_mark - is the member id
@@ -86,27 +83,13 @@ For post-processing, column_forces.csv is generated for plotting of forces in al
 
 #### For Column Design:
 On your terminal, you can obtain the result for column interaction for phiMn about z and phiMn about y and as table:
-┌─────────┬────────────────────┬────────────────────┬─────────────────────┬────────────────────┬────────────────────┬─────────────────────┐
-│ (index) │         c          │         Mn         │         Pn          │        phi         │       phiMn        │        phiPn        │
-├─────────┼────────────────────┼────────────────────┼─────────────────────┼────────────────────┼────────────────────┼─────────────────────┤
-│    0    │     999999999      │         0          │ 2080.1996816366036  │        0.65        │         0          │ 1352.1297930637925  │
-│    1    │ 539.0769230769231  │ 38.815005553632574 │ 2080.1996816366036  │        0.65        │ 25.229753609861174 │ 1352.1297930637925  │
-│    2    │ 533.6861538461538  │ 38.583327375396934 │ 2080.1996816366036  │        0.65        │ 25.079162794008006 │ 1352.1297930637925  │
-│    3    │ 528.2953846153846  │ 38.346921071074846 │ 2080.1996816366036  │        0.65        │ 24.92549869619865  │ 1352.1297930637925  │
-│    4    │ 522.9046153846155  │ 38.105640409962625 │ 2080.1996816366036  │        0.65        │ 24.76866626647571  │ 1352.1297930637925  │
-│    5    │ 517.5138461538462  │ 37.85933306841056  │ 2080.1996816366036  │        0.65        │ 24.608566494466864 │ 1352.1297930637925  │
-│    6    │  512.123076923077  │ 37.60784030914161  │ 2080.1996816366036  │        0.65        │ 24.445096200942046 │ 1352.1297930637925  │
-│    7    │ 506.7323076923077  │ 37.35099664010097  │ 2080.1996816366036  │        0.65        │ 24.278147816065633 │ 1352.1297930637925  │
-│    8    │ 501.34153846153845 │ 37.08862945129603  │ 2080.1996816366036  │        0.65        │ 24.10760914334242  │ 1352.1297930637925  │
-│    9    │ 495.95076923076925 │ 36.820558627951854 │ 2080.1996816366036  │        0.65        │ 23.933363108168706 │ 1352.1297930637925  │
-
-
+![image](https://user-images.githubusercontent.com/38188145/159314929-f86a5bad-9c88-45c8-9d7a-c8c64f5641f4.png)
 
 Results are stored in column1.csv (column + member_id) for post-processing and generation of interaction diagram.
 
 
 #### Column Interaction Diagram
-To create the graph interaction diagram with the loads:
+To automatically create the column interaction diagram with the loads:
 
 `python column_interaction.py` or `python3 column_interaction.py`
 
