@@ -1,5 +1,12 @@
+/*
+  SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
+  Using ACE 318-14
+  Created by Patrick Aylsworth C. Garcia. MSCE
+*/
+
+
 // FOR SEPARATION OF CALCULATIONS
-const PI = 3.141592653589793238;
+const PI = Math.PI
 
 const column_designer = require(`./column_design.js`);
 const beam_designer = require(`./beam_design.js`);
@@ -19,7 +26,7 @@ function importForcesFromCSV(input_name, output_name, output_file_true_false) {
         // console.log(v)
         if (v != '' || v != null) return v;
     }
-    
+
     var data = file.filter(v => removeNull(v));
     var final_data = [];
     var final_data_json = {};
@@ -27,7 +34,7 @@ function importForcesFromCSV(input_name, output_name, output_file_true_false) {
     var count;
     var cells;
     var member_id;
-    
+
     for (var i = 0; i < data.length; i++) {
         cells = data[i].split(",");
         cells.pop()
@@ -36,13 +43,13 @@ function importForcesFromCSV(input_name, output_name, output_file_true_false) {
             started = true;
             count = i;
         }
-        
+
         if (!started || member_id == "" || member_id == null || cells.length == 0) continue;
-        
+
         for (var k = 0; k < cells.length-1; k++) {
             if (!isNaN(parseFloat(cells[k]))) cells[k] = parseFloat(cells[k]);
         }
-        
+
         var id = String(cells[0]);
         cells[0] =String(id);
         final_data.push(cells);
@@ -75,18 +82,18 @@ function sortMaxMinForces (force_array, member_array,max_min) {
             var arr = obj[keys];
 			//[[id,forces,load_group],[],[],[],[]] // number of load cases
             var dump_result_array = [];
-			
+
 			for (var h=1; h < 11 - 1; h++) {
 				var dump_2 = [];
 				for (var m =0; m < arr.length; m++) {
 					dump_2.push(arr[m][h]);
 				}
-				
+
 				if (max_min == 'max') var temp1 = Math.max(...dump_2);
                 if (max_min == 'min') var temp1 = Math.min(...dump_2);
                 dump_result_array.push(temp1)
             }
-			
+
             dump_result_obj[keys] = dump_result_array;
         }
         return dump_result_obj;
@@ -97,7 +104,7 @@ function sortMaxMinForces (force_array, member_array,max_min) {
         var dump_1 = [];
         for (var j=0; j < force_array.length; j++) {
             var force_row = force_array[j];
-			
+
             if (member_key == force_row[0]) {
                 dump_1.push(force_row);
             }
@@ -231,13 +238,13 @@ var shear_y_sorted_min = sortMaxMinForces(shear_y,member_data, 'min');
 console.log('BEAM DESIGN INITIALIZING')
 var beam_design_json = [];
 var beam_design_csv = '';
-beam_design_csv += 'beam_mark'+ '\tbeam_width' + '\tbeam_depth' + '\tdb' + '\tsupport1_top' + '\tsupport1_bot' + '\tmidspan_top' + '\tmidspan_bot' + '\tsupport2_top' + '\tsupport2_bot' + '\tds' + '\tstirrups_spacing' + '\n'; 
+beam_design_csv += 'beam_mark'+ '\tbeam_width' + '\tbeam_depth' + '\tdb' + '\tsupport1_top' + '\tsupport1_bot' + '\tmidspan_top' + '\tmidspan_bot' + '\tsupport2_top' + '\tsupport2_bot' + '\tds' + '\tstirrups_spacing' + '\n';
 for (var i = 0; i < final_member_data.length; i++) {
     var mem_id = final_member_data[i].member_id;
     if (final_member_data[i].member_type == 'beam') {
         beam_design_json[i] = designBeamReinforcement(final_member_data[i],bending_z_sorted_max[mem_id],bending_z_sorted_min[mem_id],shear_y_sorted_max[mem_id],shear_y_sorted_min[mem_id]);
         beam_design_csv += beam_design_json[i].beam_mark+ '\t'+ beam_design_json[i].beam_width+ '\t'+ beam_design_json[i].beam_depth + '\t' +beam_design_json[i].db + '\t' + beam_design_json[i].support1_top + '\t' + beam_design_json[i].support1_bot + '\t' + beam_design_json[i].midspan_top + '\t'+ beam_design_json[i].midspan_bot + '\t' +beam_design_json[i].support2_top  + '\t' + beam_design_json[i].support2_bot + '\t' +beam_design_json[i].ds + '\t' +beam_design_json[i].spacing +'\n';
-    } 
+    }
 }
 console.table(beam_design_json)
 console.log('BEAM DESIGN DONE')
@@ -248,7 +255,7 @@ fs.writeFileSync(__dirname + '/results/beam_results.txt', beam_design_csv);
 console.log('COLUMN FORCES SORTING....')
 var column_forces_csv = '';
 var column_forces_json = [];
-column_forces_csv += 'member_id' +  '\tPu'+ '\tMy' + '\tMz' + '\tSy'+ '\tSz'+ '\tsection' + '\n'; 
+column_forces_csv += 'member_id' +  '\tPu'+ '\tMy' + '\tMz' + '\tSy'+ '\tSz'+ '\tsection' + '\n';
 
 var column_forces = sortForcesForColumnDesign(axial, bending_z, bending_y,shear_y,shear_z, member_data)
 for (var i = 0; i < final_member_data.length; i++) {
@@ -260,33 +267,85 @@ for (var i = 0; i < final_member_data.length; i++) {
             var axial_temp = column_tem.axial[k];
             var bendingy_temp = column_tem.bending_y[k];
             var bendingz_temp = column_tem.bending_z[k];
-			
+
 			var sheary_temp = column_tem.shear_y[k];
             var shearz_temp = column_tem.shear_z[k];
-			
+
             for (var j =0; j < axial_temp.length; j++) {
                 var section_name = 'column'+ section;
                 column_forces_csv += mem_id + '\t' + axial_temp[j] + '\t' + Math.abs(bendingy_temp[j]) + '\t'+ Math.abs(bendingz_temp[j]) + '\t'+  Math.abs(sheary_temp[j]) + '\t' + Math.abs(shearz_temp[j]) + '\t' + section_name+'\n';
                 column_forces_json.push({'member_id': mem_id, 'Pu': axial_temp[j], 'My': Math.abs(bendingy_temp[j]), 'Mz':  Math.abs(bendingz_temp[j]), 'Sy':  Math.abs(sheary_temp[j]), 'Sz':  Math.abs(shearz_temp[j]), 'section_name':  section_name})
             }
         }
-    } 
+    }
 }
+
+// column_forces_json[i].My
+// column_forces_json[i].Pu
+
+// column_forces_json[i].Mz
+// column_forces_json[i].Pu
+
 // console.table(column_forces_json)
 console.log('COLUMN FORCES SORTING DONE')
-fs.writeFileSync(__dirname + '/results/column_forces.txt', column_forces_csv);
+fs.writeFileSync(__dirname + '/results/column_forces.csv', column_forces_csv);
+
+
+
+
 
 // CALCULATE INTERACTION DIAGRAM OF COLUMN
 var res = {};
+var interaction_diag = {};
+
+var chart_datasets = [];
+
 for (var col_id in section_material_prop) {
     if (section_material_prop[col_id].member_type == 'column') {
-        res[col_id] = generateInteractionDiagram(section_material_prop[col_id], col_id); 
+        res[col_id] = generateInteractionDiagram(section_material_prop[col_id], col_id);
         console.log('results__b')
         console.table( res[col_id].result_json_b)
         console.log('results__h')
         console.table( res[col_id].result_json_h)
-        fs.writeFileSync(__dirname + '/results/'+ res[col_id].filename+'.txt', res[col_id].result_csv);
-    } 
+        fs.writeFileSync(__dirname + '/results/'+ res[col_id].filename+'.csv', res[col_id].result_csv);
+		fs.writeFileSync(__dirname + '/results/'+ res[col_id].filename+'.txt', res[col_id].result_csv);
+
+        let temp_h = [];
+        let temp_b = [];
+
+        res[col_id].result_json_h.map(v => temp_h.push({x: v.x, y: v.y}));
+        res[col_id].result_json_b.map(v => temp_b.push({x: v.x, y: v.y}));
+
+        interaction_diag[col_id] = {
+            'results_b': temp_b,
+            'results_h': temp_h,
+        }
+
+        chart_datasets.push({
+            label: 'Moment about b',
+            pointBorderColor: 'red',
+            borderColor: 'red',
+            data: temp_b,
+            pointRadius: 3
+        })
+
+
+        chart_datasets.push({
+            label: 'Moment about h',
+            pointBorderColor: 'blue',
+            borderColor: 'blue',
+            data: temp_h,
+            pointRadius: 3
+        })
+
+        console.table(temp_h)
+
+    }
 }
 console.log('COLUMN INTERACTION DONE')
 
+
+
+
+
+// PLOT INTERACTION DIAGRAM

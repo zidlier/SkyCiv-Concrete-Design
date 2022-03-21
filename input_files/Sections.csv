@@ -1,0 +1,4 @@
+Id,Name [Optional],Material ID,"Area, A" (mm<sup>2</sup>),Iy (mm<sup>4</sup>),Iz (mm<sup>4</sup>),J (mm<sup>4</sup>),Shear Area Y [Optional] (mm<sup>2</sup>),Shear Area Z [Optional] (mm<sup>2</sup>),Renderer Color,
+1,300 x 300,4,90000,472499999.99999994,472499999.99999994,1138670000,,,,
+2,300 x 250,4,75000,136718750,196875000,778678000,,,,
+

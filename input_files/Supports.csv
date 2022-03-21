@@ -1,0 +1,10 @@
+Id,Node ID,Restraint Code,Direction Code,X Translation Stiffness (kN/m),Y Translation Stiffness (kN/m),Z Translation Stiffness (kN/m),X Rotation Stiffness (kN-m/rad),Y Rotation Stiffness (kN-m/rad),Z Rotation Stiffness (kN-m/rad),
+1,1,FFFFFF,BBBBBB,0,0,0,0,0,0,
+2,3,FFFFFF,BBBBBB,0,0,0,0,0,0,
+3,5,FFFFFF,BBBBBB,0,0,0,0,0,0,
+4,7,FFFFFF,BBBBBB,0,0,0,0,0,0,
+5,9,FFFFFF,BBBBBB,0,0,0,0,0,0,
+6,11,FFFFFF,BBBBBB,0,0,0,0,0,0,
+7,13,FFFFFF,BBBBBB,0,0,0,0,0,0,
+8,15,FFFFFF,BBBBBB,0,0,0,0,0,0,
+

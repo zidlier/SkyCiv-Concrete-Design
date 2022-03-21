@@ -1,4 +1,10 @@
-var PI = 3.14159265358979;
+/*
+  SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
+  Using ACE 318-14
+  Created by Patrick Aylsworth C. Garcia. MSCE
+*/
+
+var PI = Math.PI;
 
 function interpolate(x1, y1, x3, x2, y2) {
     var y2 = (((x2 - x1) * (y3 - y1)) / (x3 - x1)) + y1;
@@ -39,7 +45,7 @@ function maxRebarPerLayer(widthprime, diameter) {
 
 
 var designBeamReinforcement = function (mem_data, moment_max, moment_min, shear_max, shear_min) {
-    
+
     var beam_mark = mem_data.member_id;
     var beam_width = mem_data.width;
     var beam_depth = mem_data.depth;
@@ -67,7 +73,7 @@ var designBeamReinforcement = function (mem_data, moment_max, moment_min, shear_
 
     var support1_moment_neg = Math.abs(Math.min(moment_min[0], moment_min[1], moment_min[2]));
     var midspan_moment_neg = Math.abs(Math.min(moment_min[3], moment_min[4], moment_min[5]));
-	
+
 	if (isNaN(moment_min[8])) {
 		var support2_moment_neg = Math.abs(Math.min(moment_min[6], moment_min[7]));
 		var support2_moment_pos = Math.abs(Math.max(moment_max[6], moment_max[7]));
@@ -75,7 +81,7 @@ var designBeamReinforcement = function (mem_data, moment_max, moment_min, shear_
 		var support2_moment_neg = Math.abs(Math.min(moment_min[6], moment_min[7], moment_min[8]));
 		var support2_moment_pos = Math.abs(Math.max(moment_max[6], moment_max[7], moment_max[8]));
 	}
-	
+
 
     if (fc <= 28) {
         var beta1 = 0.85
@@ -85,8 +91,29 @@ var designBeamReinforcement = function (mem_data, moment_max, moment_min, shear_
         var beta1 = interpolate(28, 0.85, fc, 56, 0.65);
     }
 
-    var rho_min = Math.max(1.4 / fy, Math.pow(fc, 0.5) / (4 * fy));
-    var rho_max = 0.85 * beta1 * (fc / fy) * (3 / 7);
+    let Es = 200000.0
+    let rho_min = Math.max(1.4/fy, Math.pow(fc, 0.5)/(4*fy));
+    let rho_balanced = 0.85*beta1*(fc/fy)*((Es*0.003)/((0.003*Es)+fy))
+
+    let rho_max_grade40 = {
+        "21": 0.0280,
+        "24": 0.0325,
+        "28": 0.0370,
+        "31": 0.04,
+        "35": 0.0435
+    }
+
+    let rho_max_grade60 = {
+        "21": 0.016,
+        "24": 0.019,
+        "28": 0.021,
+        "31": 0.023,
+        "35": 0.025
+    }
+
+    let rho_max = (fy == 415) ? rho_max_grade60[fc] : rho_max_grade40[fc]
+
+
 
     var As_support1_top = AsSolver(support1_moment_neg, fc, fy, beam_width, effectivedepth, rho_min);
     var As_support1_bot = AsSolver(Math.max(support1_moment_pos, 0.5 * support1_moment_neg), fc, fy, beam_width, effectivedepth, rho_min);
@@ -110,7 +137,7 @@ var designBeamReinforcement = function (mem_data, moment_max, moment_min, shear_
     final.midspan_top = midspan_top;
     final.midspan_bot = midspan_bot;
     final.support2_top = support2_top;
-    final.support2_bot = support2_bot; 
+    final.support2_bot = support2_bot;
     final.ds = ds;
 
 

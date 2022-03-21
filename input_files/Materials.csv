@@ -1,0 +1,3 @@
+Id,Name (Optional),Young's Modulus (E) (MPa),Density (kg/m<sup>3</sup>),Poisson's Ratio (v),Yield Strength (Optional) (MPa),Ultimate Strength (Optional) (MPa),Class,
+1,"Concrete, Cast-in-Place gray",21383,2407.31,0.2,20.7,20.7,concrete,
+
