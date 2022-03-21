@@ -1,8 +1,8 @@
 # SkyCiv-Concrete-Design
 My own concrete design based on SkyCiv S3D analysis output using nodejs
 
-# SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
-# written by Patrick Aylsworth C. Garcia, MSCE
+## SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator
+## written by Patrick Aylsworth C. Garcia, MSCE
 
 
 
@@ -55,28 +55,6 @@ On your terminal, you can obtain the result for beam design as table:
 │ (index) │ beam_mark │ beam_width │ beam_depth │ db │ support1_top │ support1_bot │ midspan_top │ midspan_bot │ support2_top │ support2_bot │ ds │                  spacing                  │
 ├─────────┼───────────┼────────────┼────────────┼────┼──────────────┼──────────────┼─────────────┼─────────────┼──────────────┼──────────────┼────┼───────────────────────────────────────────┤
 │    1    │    '4'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    2    │    '5'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    3    │    '6'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    6    │    '9'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    7    │   '10'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    8    │   '11'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│    9    │   '12'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   10    │   '13'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   15    │   '18'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   19    │   '22'    │    250     │    400     │ 16 │      3       │      3       │      2      │      3      │      3       │      3       │ 10 │ [ 137.5, 137.5, 137.5, ... 6 more items ] │
-│   20    │   '23'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   21    │   '24'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   23    │   '26'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   24    │   '27'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   25    │   '28'    │    250     │    400     │ 16 │      3       │      3       │      2      │      3      │      3       │      3       │ 10 │ [ 137.5, 137.5, 137.5, ... 6 more items ] │
-│   26    │   '29'    │    250     │    400     │ 16 │      3       │      3       │      2      │      3      │      3       │      3       │ 10 │ [ 137.5, 137.5, 137.5, ... 6 more items ] │
-│   27    │   '30'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   29    │   '32'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   38    │   '41'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   39    │   '42'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-│   54    │   '57'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
-
-
 
 
 where: 	beam_mark - is the member id
