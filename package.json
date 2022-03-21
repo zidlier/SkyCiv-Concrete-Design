@@ -1,0 +1,18 @@
+{
+  "name": "skycivcalc",
+  "version": "1.0.0",
+  "description": "SkyCiv Beam Calculator, Column Forces Sorter, and Column Interaction diagram generator\r written by Patrick Aylsworth C. Garcia, MSCE",
+  "main": "beam_design.js",
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "chartjs-node-canvas": "^2.4.1",
+    "csv-parser": "^2.3.2",
+    "csv-writer": "^1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
