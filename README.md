@@ -51,9 +51,7 @@ OUTPUT:
 On your terminal, you can obtain the result for beam design as table:
 
 
-┌─────────┬───────────┬────────────┬────────────┬────┬──────────────┬──────────────┬─────────────┬─────────────┬──────────────┬──────────────┬────┬───────────────────────────────────────────┐
-│ (index) │ beam_mark │ beam_width │ beam_depth │ db │ support1_top │ support1_bot │ midspan_top │ midspan_bot │ support2_top │ support2_bot │ ds │                  spacing                  │
-├─────────┼───────────┼────────────┼────────────┼────┼──────────────┼──────────────┼─────────────┼─────────────┼──────────────┼──────────────┼────┼───────────────────────────────────────────┤
+│ (index) │ beam_mark │ beam_width │ beam_depth │ db │ support1_top │ support1_bot │ midspan_top │ midspan_bot │ support2_top │ support2_bot │ ds │ spacing │
 │    1    │    '4'    │    250     │    300     │ 16 │      2       │      2       │      2      │      2      │      2       │      2       │ 10 │ [ 112.5, 112.5, 112.5, ... 6 more items ] │
 
 
