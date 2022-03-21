@@ -88,9 +88,15 @@ On your terminal, you can obtain the result for column interaction for phiMn abo
 Results are stored in column1.csv (column + member_id) for post-processing and generation of interaction diagram.
 
 
-#### Column Interaction Diagram
-To automatically create the column interaction diagram with the loads:
+#### Column Interaction Diagram and Shear Envelope
+To automatically create the column interaction diagram and shear envelope with the loads:
 
 `python column_interaction.py` or `python3 column_interaction.py`
 
 Just install dependencies like pandas etc.
+
+![column1-My-Pu](https://user-images.githubusercontent.com/38188145/159315912-fdb9dfb8-7cda-4a1c-893a-799d2e68f0a2.png)
+
+![column1-Mz-Pu](https://user-images.githubusercontent.com/38188145/159315976-7df7b720-af2d-447f-b974-689a22b1e520.png)
+
+![column1-shear-envelope](https://user-images.githubusercontent.com/38188145/159316049-2169b09c-67f8-4808-a2db-c15d7ca60144.png)
