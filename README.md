@@ -6,6 +6,11 @@ My own concrete design based on SkyCiv S3D analysis output using nodejs
 
 
 *****************************************************************************************************************************************
+### SETUP:
+- Install Nodejs
+- Install python3
+- `npm install`
+
 ### INPUT:
 
 Step 1: From SkyCiv analysis results, select Output -> CSV Results and generate the following csv files:
@@ -39,7 +44,7 @@ Step 2: Edit the section_input.json with the following definition
 
 Step 3: Edit the variable "start_val" in design.js - this will be the first member id on the Members.csv
 
-Step 4: To run, go to directory, open terminal and type "node design" - take note, nodejs should be installed on your computer.
+Step 4: To run, go to directory, open terminal and type `node design` - take note, nodejs should be installed on your computer.
 
 
 
