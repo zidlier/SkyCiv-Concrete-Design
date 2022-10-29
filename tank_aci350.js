@@ -5,6 +5,8 @@ var prettyPrint = function(val) {
 	return val.toFixed(3);
 }
 
+const fs = require('fs')
+
 const liquid_unit_weight = 13.7
 const concrete_unit_weight = 23.6
 const Na = 1.08
@@ -22,17 +24,17 @@ var Ci = (Ti <= Ts) ? 2.5*Ca : Cv/Ti
 Ci = (Z == 0.4) ? Math.min(1.6*Z*Nv,Ci): Ci
 var tank_z_dim = 10
 var tank_x_dim = 13.5
-var HL = 4.7
+var HL_temp = 4.8
 var hr = 5.425
 var hw = 2.675
 var tw = 0.4
 var Wr_total = 271
 var Ww_total
-var free_space = 5.35-HL
+// var free_space = 5.35-HL_temp
 let Lx = 11.8
 let Lz = 7.8
-let L_HL_z = Lz/HL
-let L_HL_x = Lx/HL
+let L_HL_z = Lz/HL_temp
+let L_HL_x = Lx/HL_temp
 let epsilon_whole_z = calculateEffectiveMassEpsilon(L_HL_z)
 let Pr = (Ci*I*epsilon_whole_z*Wr_total)/Ri
 
@@ -45,22 +47,40 @@ function calculateEffectiveMassEpsilon(L_HL) {
 
 function calculateLambda(HL_L) {
     let lambda = Math.pow(3.16*32.2*Math.tanh(3.16*HL_L),0.5)
-    console.log(2*Math.PI/lambda)
+    // console.log(2*Math.PI/lambda)
     return lambda
 }
 
+calculateLambda(1)
+calculateLambda(1/2)
+calculateLambda(1/3)
+calculateLambda(1/4)
+calculateLambda(1/5)
 calculateLambda(1/6)
-
+calculateLambda(1/7)
+calculateLambda(1/8)
 
 let z_num = 1
 let result = []
 let Pc_sum = 0
 let Pi_sum = 0
 
-function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickness, weightLiquid) {
+
+function calculatePiyHalf (Pi, y, HL, hi) {
+    let piy = ((Pi/2)*(4*HL - 6*hi - (6*HL-12*hi)*(y/HL)))/(HL*HL)
+    return piy
+}
+
+function calculcatePcyHalf (Pc, y, HL, hc) {
+    let piy = ((Pc/2)*(4*HL - 6*hc - (6*HL-12*hc)*(y/HL)))/(HL*HL)
+    return piy
+}
+
+function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickness, heightLiquid, weightLiquid) {
     let tw = wallThickness
     let L = lengthOfTankInside
     let B = widthOfTank
+    let HL = heightLiquid
     var weight_of_liquid = (weightLiquid) ? weightLiquid : L*B*liquid_unit_weight*HL
     var weight_of_wall = ((L+tw*2)*(B+2*tw) - L*B)*concrete_unit_weight
     let WL = weight_of_liquid
@@ -73,9 +93,10 @@ function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickn
     var Cc = (Tc <= 1.6/Ts) ? Math.min(1.5*Cv/Tc, 3.75*Ca) : (6*Ca)/(Tc*Tc)
     // calculate epsilon
     let dmax = L*0.5*Cc*I
+    let free_space = 5.35-HL
     let note = (dmax >= free_space) ? 'calculate acceleration' : 'freeboard ok!'
     
-    // console.log(`Chamber ${z_num}: L = ${prettyPrint(L)}m B=${prettyPrint(B)}m free = ${prettyPrint(free_space)}m dmax = ${prettyPrint(dmax)}m diff: ${prettyPrint(dmax-free_space)}m Cc:${prettyPrint(Cc)}`)
+    console.log(`Chamber ${z_num}: L = ${prettyPrint(L)}m B=${prettyPrint(B)}m free = ${prettyPrint(free_space)}m dmax = ${prettyPrint(dmax)}m diff: ${prettyPrint(dmax-free_space)}m Cc:${prettyPrint(Cc)}`)
 
     let Wi_WL = Math.tanh(0.866*L_HL)/(0.866*L_HL)
     let Wi = Wi_WL*weight_of_liquid
@@ -97,6 +118,19 @@ function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickn
     Pi = Math.max(Pi, (1.6*Z*Nv*I*Wi)/Ri)
     let Pc = (Tc > 1.6/Ts) ? Math.min((6*Ca*I*Wc)/(Rc*Tc*Tc), (1.5*2.5*Ca*I*Wc)/Rc) : (1.5*Cv*I*Wc)/(Rc*Tc)
 
+    let Pihiprime = Pi*hiprime
+    let Pchcprime = Pc*hcprime
+    
+    // let pi_top = calculatePiyHalf (Pi, hr, HL, hi)
+    // let pc_top = calculatePiyHalf (Pc, hr, HL, hc)
+    
+    let pi_bot = calculatePiyHalf (Pi, 0, HL, hi)
+    let pc_bot = calculatePiyHalf (Pc, 0, HL, hc)
+
+    let pc_top = calculatePiyHalf (Pc, HL_temp, HL, hc)
+    let pi_top = calculatePiyHalf (Pi, HL_temp, HL, hi)
+
+    let qhy = free_space*liquid_unit_weight
     let res = {
         'Chamber': z_num,
         L: prettyPrint(L),
@@ -116,8 +150,19 @@ function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickn
         hc: prettyPrint(hc),
         hcprime: prettyPrint(hcprime),
         Pc: prettyPrint(Pc),
+        Pihiprime: prettyPrint(Pihiprime),
+        Pchcprime: prettyPrint(Pchcprime),
+        
         dmax: prettyPrint(dmax),
+        free_space: prettyPrint(free_space),
+        pi_top: prettyPrint(pi_top),
+        pi_bot: prettyPrint(pi_bot),
+        pc_top: prettyPrint(pc_top),
+        pc_bot: prettyPrint(pc_bot),
+        qhy: prettyPrint(qhy),
+        
     }
+    
     result.push(res)
     Pc_sum += Pc
     Pi_sum += Pi
@@ -129,7 +174,7 @@ function calculateSeismicForcesTank (lengthOfTankInside, widthOfTank, wallThickn
 
 
 
-console.log(calculateSeismicForcesTank(7.8,11.8,0.4, 6064))
+// console.log(calculateSeismicForcesTank(7.8,11.8,0.4, 6064))
 
 // ALONG Z DIRECTION
 console.log('For Along Z-direction - Seismic 1 and 3')
@@ -138,25 +183,27 @@ result=[]
 Pc_sum = 0
 Pi_sum = 0
 
-calculateSeismicForcesTank(3.3,3.3,0.4)
-calculateSeismicForcesTank(3.3,3.4,0.4)
-calculateSeismicForcesTank(3.3,3,0.4)
-calculateSeismicForcesTank(3.3,3.3,0.4)
-calculateSeismicForcesTank(3.3,3.4,0.4)
-calculateSeismicForcesTank(3.3,3,0.4)
-calculateSeismicForcesTank(2,1.22,0.4)
-calculateSeismicForcesTank(1.9,1.9,0.4)
-calculateSeismicForcesTank(1.9,1.9,0.4)
-calculateSeismicForcesTank(0.8,1.9,0.4)
-calculateSeismicForcesTank(2.5,1.9,0.4)
-calculateSeismicForcesTank(0.8,0.8,0.4)
-calculateSeismicForcesTank(0.8,0.8,0.4)
-calculateSeismicForcesTank(0.8,0.8,0.4)
-calculateSeismicForcesTank(2,4.3,0.4)
-calculateSeismicForcesTank(2,4.3,0.4)
+calculateSeismicForcesTank(3.3, 3.3, 0.4, 4.7)
+calculateSeismicForcesTank(3.3, 3.4, 0.4, 4.7)
+calculateSeismicForcesTank(3.3, 3, 0.4, 4.8)
+calculateSeismicForcesTank(3.3, 3.3, 0.4, 4.7)
+calculateSeismicForcesTank(3.3, 3.4, 0.4, 4.7)
+calculateSeismicForcesTank(3.3, 3, 0.4, 4.8)
+
+calculateSeismicForcesTank(2, 1.2, 0.4, 4.5)
+calculateSeismicForcesTank(1.9, 1.9, 0.4, 5)
+calculateSeismicForcesTank(1.9, 1.9, 0.4, 5)
+calculateSeismicForcesTank(0.8, 1.9, 0.4, 4.8)
+calculateSeismicForcesTank(2.5, 1.9, 0.4, 4.8)
+calculateSeismicForcesTank(0.8, 0.8, 0.4, 4.8)
+calculateSeismicForcesTank(0.8, 0.8, 0.4, 4.8)
+calculateSeismicForcesTank(2, 4.3, 0.4, 4)
+calculateSeismicForcesTank(2, 4.3, 0.4, 4)
 console.table(result)
+
 console.log(`Pc total = ${Pc_sum}  \tPi total = ${Pi_sum} \tP = ${Pc_sum+Pi_sum}`)
 
+fs.writeFileSync(__dirname + '/' + 'tank_forces_z' + '.json', JSON.stringify(result));
 
 // along X-direction
 console.log('For Along X-direction - Seismic 2 and 4')
@@ -165,20 +212,23 @@ result=[]
 Pc_sum = 0
 Pi_sum = 0
 
-calculateSeismicForcesTank(3.3,3.3,0.4)
-calculateSeismicForcesTank(3.4,3.3,0.4)
-calculateSeismicForcesTank(3,3.3,0.4)
-calculateSeismicForcesTank(3.3,3.3,0.4)
-calculateSeismicForcesTank(3.4,3.3,0.4)
-calculateSeismicForcesTank(3,3.3,0.4)
-calculateSeismicForcesTank(1.2,2,0.4)
-calculateSeismicForcesTank(1.9,1.9,0.4)
-calculateSeismicForcesTank(1.9,1.9,0.4)
-calculateSeismicForcesTank(1.9,0.8,0.4)
-calculateSeismicForcesTank(1.9,2.5,0.4)
-calculateSeismicForcesTank(0.8,0.8,0.4)
-calculateSeismicForcesTank(0.8,0.8,0.4)
-calculateSeismicForcesTank(4.3,2,0.4)
-calculateSeismicForcesTank(4.3,2,0.4)
+calculateSeismicForcesTank(3.3,3.3,0.4, 4.7)
+calculateSeismicForcesTank(3.4,3.3,0.4, 4.7)
+calculateSeismicForcesTank(3,3.3,0.4, 4.8)
+calculateSeismicForcesTank(3.3,3.3,0.4, 4.7)
+calculateSeismicForcesTank(3.4,3.3,0.4, 4.7)
+calculateSeismicForcesTank(3,3.3,0.4, 4.8)
+
+calculateSeismicForcesTank(1.2,2,0.4, 4.5)
+calculateSeismicForcesTank(1.9,1.9,0.4, 5)
+calculateSeismicForcesTank(1.9,1.9,0.4, 5)
+calculateSeismicForcesTank(1.9,0.8,0.4, 4.8)
+calculateSeismicForcesTank(1.9,2.5,0.4, 4.8)
+calculateSeismicForcesTank(0.8,0.8,0.4, 4.8)
+calculateSeismicForcesTank(0.8,0.8,0.4, 4.8)
+calculateSeismicForcesTank(4.3,2,0.4, 4)
+calculateSeismicForcesTank(4.3,2,0.4, 4)
 console.table(result)
 console.log(`Pc total = ${Pc_sum}  \tPi total = ${Pi_sum} \tP = ${Pc_sum+Pi_sum}`)
+
+fs.writeFileSync(__dirname + '/' + 'tank_forces_x' + '.json', JSON.stringify(result));
